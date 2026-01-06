@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 import './App.css'
 import SearchBar from '../SearchBar/SearchBar.jsx'
@@ -8,6 +8,8 @@ import Playlist from '../Playlist/Playlist.jsx'
 function App() {
 
   const [playlist, setPlaylist] = useState([])
+
+  const [playlistName, setPlaylistName] = useState("")
 
   const addToPlaylist = (song) => {
     setPlaylist((prev) => [...prev, song])
@@ -24,6 +26,10 @@ function App() {
 
     setPlaylist(newPlaylist)
   }
+
+  const handlePlaylistRename = (name) => {
+    setPlaylistName(name)
+  }
   
   return (
     <>
@@ -33,7 +39,7 @@ function App() {
 
     <SearchResults addSong={addToPlaylist}/>
 
-    <Playlist addedSongs={playlist} removeSong={handleRemoval}/>
+    <Playlist addedSongs={playlist} removeSong={handleRemoval} name={playlistName} rename={handlePlaylistRename}/>
     </>
   )
 }
