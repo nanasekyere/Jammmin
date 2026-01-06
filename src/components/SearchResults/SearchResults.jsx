@@ -42,7 +42,7 @@ function SearchResults({searchValue, addSong}) {
                 return (
                     <div key={song.id}>
                         <SongCell song={song} add={addSongToPlaylist}/>
-                        <button className="addSong" onClick={() => addSongToPlaylist(song.id)} value={song.id}>+</button> 
+                        <button className="addSong" onClick={() => addSongToPlaylist(song.id)}>+</button> 
                     </div>
             );
             }) }
