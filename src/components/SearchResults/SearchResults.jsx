@@ -29,9 +29,9 @@ function SearchResults({searchValue, addSong}) {
     //     setSongs((prev) => [response, ...prev])
     // }, [searchValue])
 
-    function addSongToPlaylist(e) {
+    function addSongToPlaylist(id) {
         const songToAdd = songs.find((song) => {
-            return song.id === Number(e.target.value)
+            return song.id === id
         })
         addSong(songToAdd)
     }
@@ -42,7 +42,7 @@ function SearchResults({searchValue, addSong}) {
                 return (
                     <div key={song.id}>
                         <SongCell song={song} add={addSongToPlaylist}/>
-                        <button className="addSong" onClick={addSongToPlaylist} value={song.id}>+</button> 
+                        <button className="addSong" onClick={() => addSongToPlaylist(song.id)} value={song.id}>+</button> 
                     </div>
             );
             }) }
