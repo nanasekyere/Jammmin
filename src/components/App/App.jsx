@@ -13,10 +13,18 @@ function App() {
     setPlaylist((prev) => [...prev, song])
   }
 
-  function handleSearch(searchValue) {
+  const handleSearch = (searchValue) => {
     alert(`Searching for ${searchValue}`)
   }
 
+  const handleRemoval = (songToRemove) => {
+    const newPlaylist = playlist.filter((song) => {
+      return song.id !== songToRemove.id
+    })
+
+    setPlaylist(newPlaylist)
+  }
+  
   return (
     <>
     <SearchBar onSearch={handleSearch} />
@@ -25,7 +33,7 @@ function App() {
 
     <SearchResults addSong={addToPlaylist}/>
 
-    <Playlist addedSongs={playlist} />
+    <Playlist addedSongs={playlist} removeSong={handleRemoval}/>
     </>
   )
 }
