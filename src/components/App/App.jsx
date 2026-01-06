@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react'
-
 import './App.css'
 import SearchBar from '../SearchBar/SearchBar.jsx'
 import SearchResults from '../SearchResults/SearchResults.jsx'
 import Playlist from '../Playlist/Playlist.jsx'
+import { get } from "../../utilities";
 
 function App() {
 
@@ -11,13 +11,22 @@ function App() {
 
   const [playlistName, setPlaylistName] = useState("")
 
+  const [searchResults, setSearchResults] = useState([])
+
   const addToPlaylist = (song) => {
     setPlaylist((prev) => [...prev, song])
   }
 
-  const handleSearch = (searchValue) => {
-    alert(`Searching for ${searchValue}`)
-  }
+  const handleSearch = async (searchValue) => {
+    try {
+        const results = await get(searchValue);
+        setSearchResults(results);
+    } catch (error) {
+        alert("Search failed:", error)
+        console.error("Search failed:", error);
+        setSearchResults([]);
+    }
+}
 
   const handleRemoval = (songToRemove) => {
     const newPlaylist = playlist.filter((song) => {
@@ -37,7 +46,7 @@ function App() {
 
     <br />
 
-    <SearchResults addSong={addToPlaylist}/>
+    <SearchResults addSong={addToPlaylist} songList={searchResults}/>
 
     <Playlist addedSongs={playlist} removeSong={handleRemoval} name={playlistName} rename={handlePlaylistRename}/>
     </>
